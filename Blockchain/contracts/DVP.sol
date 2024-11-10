@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 /**
  * @title DecentralizedVotingProtocol
- * @dev An open protocol for creating polls, verifying voters, and casting votes with reliable associations between polls and votes.
+ * @dev An open protocol for creating polls and casting votes with reliable associations between polls and votes.
  */
 contract DecentralizedVotingProtocol {
 
@@ -20,26 +20,12 @@ contract DecentralizedVotingProtocol {
         mapping(address => uint) votes; // voterID -> choice
     }
 
-    struct Voter {
-        address pubKey;
-        uint age;
-        string gender;
-        string country;
-    }
-
     mapping(uint => Poll) private polls; // pollID -> poll
-    mapping(address => Voter) public verifiedVoters; // pubKey -> Voter 
     uint public pollCounter;
 
     event PollCreated(string pollName);
-    event VoterVerified(address indexed voter);
-    event VoteCast(address indexed voter, uint pollId, uint optionId);
+    event VoteCast(address indexed voter, uint pollId, string option);
     event PollEnded(uint pollId);
-
-    modifier onlyVerifiedVoter() {
-        require(verifiedVoters[msg.sender].pubKey != address(0), "Not a verified voter.");
-        _;
-    }
 
     modifier pollExists(uint _pollId) {
         require(_pollId > 0 && _pollId <= pollCounter, "Poll does not exist.");
@@ -81,7 +67,6 @@ contract DecentralizedVotingProtocol {
     ) external {
         require(_options.length >= 2, "At least two options required.");
         require(_startTime < _endTime, "Start time must be before end time.");
-        require(_startTime > block.timestamp, "Start time must be in the future.");
         require(_options.length <= 5, "Cannot have more than 5 options");
         require(_options.length == _imageURLs.length, "Options and images must have the same length.");
 
@@ -184,32 +169,11 @@ contract DecentralizedVotingProtocol {
 
 
     /**
-     * @dev Verifies a voter by storing their details. Any user can call this to verify themselves.
-     * @param _age Age of the voter.
-     * @param _gender Gender of the voter.
-     * @param _country Country of the voter.
-     */
-    function verifyVoter(uint _age, string calldata _gender, string calldata _country) external {
-        require(verifiedVoters[msg.sender].pubKey == address(0), "Voter already verified.");
-
-        verifiedVoters[msg.sender] = Voter({
-            pubKey: msg.sender,
-            age: _age,
-            gender: _gender,
-            country: _country
-        });
-
-        emit VoterVerified(msg.sender);
-    }
-
-
-
-    /**
-     * @dev Allows a verified voter to cast a vote for a specific poll option.
+     * @dev Allows a voter to cast a vote for a specific poll option.
      * @param _pollId ID of the poll to vote in.
      * @param _optionId The ID of the option the voter chooses.
      */
-    function castVote(uint _pollId, uint _optionId) external onlyVerifiedVoter pollExists(_pollId) {
+    function castVote(uint _pollId, uint _optionId) external pollExists(_pollId) {
         Poll storage poll = polls[_pollId];
 
         require(block.timestamp >= poll.startTime && block.timestamp <= poll.endTime, "Poll is not within the voting period.");
@@ -219,7 +183,7 @@ contract DecentralizedVotingProtocol {
         poll.votes[msg.sender] = _optionId + 1;
         poll.voteCounts[_optionId]++;
 
-        emit VoteCast(msg.sender, _pollId, _optionId);
+        emit VoteCast(msg.sender, _pollId, poll.options[_optionId]);
     }
 
 
