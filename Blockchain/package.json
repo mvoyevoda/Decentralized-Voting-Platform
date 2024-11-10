@@ -16,6 +16,7 @@
     "solc": "^0.8.27"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.1.0"
+    "@openzeppelin/contracts": "^5.1.0",
+    "web3": "^4.15.0"
   }
 }
