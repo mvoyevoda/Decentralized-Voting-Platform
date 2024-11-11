@@ -164,6 +164,24 @@ contract DecentralizedVotingProtocol {
 
 
 
+    /**
+     * @dev Retrieves vote counts for each option in a specific poll.
+     * @param _pollId ID of the poll.
+     * @return An array of vote counts for each option in the poll.
+     */
+    function getVoteCounts(uint _pollId) external view pollExists(_pollId) returns (uint[] memory) {
+        Poll storage poll = polls[_pollId];
+        uint[] memory counts = new uint[](poll.options.length);
+
+        for (uint i = 0; i < poll.options.length; i++) {
+            counts[i] = poll.voteCounts[i];
+        }
+
+        return counts;
+    }
+
+
+
     // --------------------------------- VOTING FUNCTIONS ---------------------------------
 
 
