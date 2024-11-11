@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { addPoll } from '../../Blockchain/scripts/addPoll'
+import { useState } from "react";
+// import { uploadPoll } from "../blockchain"
 
 function FormPage() {
   const [pollName1, setPollName1] = useState('');
@@ -16,6 +16,11 @@ function FormPage() {
     console.log(options)
     setOptions(newOptions);
     setCurrOption('');
+  }
+
+  const handleAddPoll = (e) => {
+    e.preventDefault();
+    // Add poll handling logic here
   }
 
   return (
@@ -50,8 +55,8 @@ function FormPage() {
         <p>
           {
             options.map((option, index) => (
-              <div>
-                <span key={index}>{option}</span>
+              <div key={index}>
+                <span>{option}</span>
                 <br/>
               </div>
             ))
@@ -60,7 +65,7 @@ function FormPage() {
 
         <br />
         <br />
-        <button onClick={(event) => addPoll(event, pollName1, pollDesc1, options, "", startTime1, endTime1)} type="submit">Submit</button>
+        <button onClick={(e) => handleAddPoll(e)} type="submit">Submit</button>
       </form>
     </div>
   );
