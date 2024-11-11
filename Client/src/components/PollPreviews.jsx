@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { fetchPollDetails } from "../blockchain";
+import { fetchPollDetails, fetchVoteCounts } from "../blockchain";
 
 function PollPreviews({ polls, isLoading, handleVote }) {
   const [detailedPolls, setDetailedPolls] = useState([]);
 
-  // Load detailed data for each poll
+  // Load detailed data for each poll and vote counts
   useEffect(() => {
     const loadPollDetails = async () => {
       const details = await Promise.all(
         polls.map(async (poll) => {
           const detail = await fetchPollDetails(poll.pollId);
-          return { ...poll, ...detail };
+          const voteCounts = await fetchVoteCounts(poll.pollId); // Fetch vote counts
+          return { ...poll, ...detail, voteCounts }; // Merge voteCounts into poll details
         })
       );
       setDetailedPolls(details);
@@ -37,6 +38,7 @@ function PollPreviews({ polls, isLoading, handleVote }) {
                 poll.options.map((option, i) => (
                   <div key={i} className="option" style={{ border: "1px solid navy", padding: "10px", textAlign: "center" }}>
                     <p>{option}</p>
+                    <p>Votes: {poll.voteCounts ? poll.voteCounts[i] : 0}</p> {/* Display each option's vote count */}
                     <button 
                       onClick={() => handleVote(Number(poll.pollId), Number(i))}
                     >

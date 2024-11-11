@@ -98,6 +98,43 @@ export const fetchPollDetails = async (pollId) => {
   }
 };
 
+// export const fetchPollDetails = async (pollId) => {
+//   await loadWeb3AndContract();
+//   try {
+//     const response = await votingContract.methods.getPoll(pollId).call();
+
+//     // Extract data directly from the getPoll response
+//     return {
+//       pollId: response[0],
+//       title: response[1],
+//       description: response[2],
+//       creator: response[3],
+//       startTime: response[4],
+//       endTime: response[5],
+//       isActive: response[6],
+//       options: response[7],
+//       imageURLs: response[8],
+//       totalVotes: response[9].reduce((acc, count) => acc + parseInt(count, 10), 0), // Sum of all votes
+//       voteCounts: response[9].map((count) => parseInt(count, 10)), // Convert vote counts to integers
+//     };
+//   } catch (error) {
+//     console.error(`Error fetching details for poll ID ${pollId}:`, error);
+//     return null;
+//   }
+// };
+
+export const fetchVoteCounts = async (pollId) => {
+  await loadWeb3AndContract();
+  try {
+    // Call the getVoteCounts function from the contract
+    const voteCounts = await votingContract.methods.getVoteCounts(pollId).call();
+    return voteCounts.map((count) => parseInt(count, 10)); // Convert counts to integers
+  } catch (error) {
+    console.error(`Error fetching vote counts for poll ID ${pollId}:`, error);
+    return null; // Return null in case of error
+  }
+};
+
 export const castVote = async (pollId, optionIndex, account) => {
   await loadWeb3AndContract();
 
