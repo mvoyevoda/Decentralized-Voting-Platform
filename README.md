@@ -32,6 +32,7 @@ To run the DVP, follow these steps:
 
     - **Tab 3: Start the Client**
       ```bash
+      cd DVP/Client
       npm install
       npm run dev
       ```
