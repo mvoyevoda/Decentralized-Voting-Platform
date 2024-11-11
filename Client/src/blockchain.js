@@ -44,6 +44,43 @@ export const loadWeb3AndContract = async () => {
 };
 
 
+export const getCurrentAccount = async () => {
+  await loadWeb3AndContract();
+  const accounts = await web3.eth.getAccounts();
+  if (accounts.length === 0) {
+    console.error("No accounts found. Make sure MetaMask is connected.");
+    return null;
+  }
+  return accounts[0];
+};
+
+
+export const uploadPoll = async (pollName, pollDesc, startTime, endTime, options, imageURLs, account) => {
+  await loadWeb3AndContract();
+
+  console.log("Attempting to create poll with parameters:");
+  console.log("Poll Name:", pollName);
+  console.log("Poll Description:", pollDesc);
+  console.log("Start Time:", startTime);
+  console.log("End Time:", endTime);
+  console.log("Options:", options);
+  console.log("Image URLs:", imageURLs);
+  console.log("Account:", account);
+
+  try {
+    const transaction = await votingContract.methods
+      .createPoll(pollName, pollDesc, startTime, endTime, options, imageURLs)
+      .send({ from: account, gas: 500000 });
+
+    console.log("Poll created successfully:", transaction);
+    return true;
+  } catch (error) {
+    console.error("Error creating poll:", error.message || error);
+    return false;
+  }
+};
+
+
 export const fetchPollPreviews = async () => {
   try {
     const { votingContract } = await loadWeb3AndContract();
