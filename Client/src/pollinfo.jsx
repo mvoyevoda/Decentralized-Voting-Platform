@@ -61,6 +61,7 @@ function HomePage() {
       const success = await castVote(pollId, optionIndex, currentAccount);
       if (success) {
         alert("Vote cast successfully!");
+        window.location.reload();
         // Optional: Reload poll data to reflect new vote count
       } else {
         alert("Failed to cast vote.");
@@ -89,7 +90,7 @@ function HomePage() {
         handleVote={handleVote} 
       />
 
-      <button><Link to="/pollform">To the polls!  </Link></button>
+      <button><Link to="/pollform">Create a Poll  </Link></button>
       
     </div>
   );
