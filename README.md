@@ -57,4 +57,4 @@ To try out the DVP, follow these steps:
       - **New RPC URL**: http://127.0.0.1:8545
       - **Chain ID**: 31337
 
-7.  **You're all set! (Make sure to clear wallet data if restarting the network)**
+7.  **You're all set! (Make sure to clear MetaMask data if restarting the network)**
