@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchPollPreviews, castVote } from "./blockchain";
 import ViewPolls from "./components/PollPreviews";
-// import VerifyVoter from "./components/VerifyVoter";
 
 function App() {
   const [polls, setPolls] = useState([]);
@@ -49,13 +48,12 @@ function App() {
     console.log("Poll ID:", pollId);
     console.log("Option Index:", optionIndex);
     console.log("Current Account:", currentAccount);
-  
-    // Check if parameters are defined and valid
+
     if (pollId == null || optionIndex == null || currentAccount == null) {
       console.error("Error: Missing pollId, optionIndex, or currentAccount.");
       return;
     }
-  
+
     try {
       const success = await castVote(pollId, optionIndex, currentAccount);
       if (success) {
@@ -80,7 +78,6 @@ function App() {
         )}
       </div>
       <h1>Decentralized Voting Platform</h1>
-      {/* <VerifyVoter /> */}
       <ViewPolls 
         polls={polls} 
         isLoading={isLoading} 

@@ -1,18 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchPollPreviews, fetchPollDetails } from "../blockchain";
+import { fetchPollDetails } from "../blockchain";
 
-function PollPreviews({ isLoading, currentAccount, handleVote }) {
-  const [polls, setPolls] = useState([]);
+function PollPreviews({ polls, isLoading, handleVote }) {
   const [detailedPolls, setDetailedPolls] = useState([]);
-
-  // Load poll previews initially
-  useEffect(() => {
-    const loadPolls = async () => {
-      const previews = await fetchPollPreviews();
-      setPolls(previews);
-    };
-    loadPolls();
-  }, []);
 
   // Load detailed data for each poll
   useEffect(() => {
