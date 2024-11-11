@@ -33,7 +33,7 @@ To try out the DVP, follow these steps:
 
     - **Tab 3: Start the Client**
       ```bash
-      cd ./Decentralized-Voting-Platform/Client
+      cd ./Decentralized-Voting-Platform/Client 
       npm install
       npm run dev
       ```
