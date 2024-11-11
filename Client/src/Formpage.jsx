@@ -6,12 +6,22 @@ function FormPage() {
       <h1>Form Page</h1>
       <form>
         <label>
-          Name:
-          <input type="text" name="name" />
+          Title:
+          <input type="PollID" name="ID:" />
         </label>
         <br />
         <label>
-          Email:
+          Description:
+          <input type="email" name="email" />
+        </label>
+        <br />
+        <label>
+          Options:
+          <input type="email" name="email" />
+        </label>
+        <br />
+        <label>
+          ImageURL:
           <input type="email" name="email" />
         </label>
         <br />
@@ -22,3 +32,5 @@ function FormPage() {
 }
 
 export default FormPage;
+
+//title, desc, options, imageURLs

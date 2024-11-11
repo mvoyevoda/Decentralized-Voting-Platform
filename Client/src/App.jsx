@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ViewPolls from "./components/PollPreviews";
 import HomePage from './pollinfo';
 import FormPage from "./Formpage";
+// import CreatePoll from "./components/CreatePoll";
 // import VerifyVoter from "./components/VerifyVoter";
 
 function App() {
