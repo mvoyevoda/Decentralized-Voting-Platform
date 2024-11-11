@@ -14,8 +14,8 @@ To run the DVP, follow these steps:
    cd DVP
    git checkout -b <your-name>
 
-2.	Open 3 Separate Terminal Tabs
-3.	Terminal Commands
+2.	**Open 3 Separate Terminal Tabs**
+3.	**Terminal Commands**
 
     - **Tab 1: Start the Blockchain Node**
       ```bash
