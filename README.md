@@ -40,7 +40,7 @@ To try out the DVP, follow these steps:
 
 4. **Connect a test account to MetaMask**
 
-    - Go to **Tab 1** and copy a private key from one of the 20 default test accounts listed in the terminal output.
+    - Go to **Tab 1** and copy a private key from one of the 20 default test accounts listed in the terminal output
     - Open up a new tab in Chrome
     - Login to MetaMask (Avoid secret phrase, use only password for simplicity)
     - Import a new wallet using the copied private key
@@ -48,7 +48,7 @@ To try out the DVP, follow these steps:
 5. **Open the DVP in Browser**
    
     - Open [http://localhost:5173/](http://localhost:5173/) in Chrome.
-    - You should be prompted by MetaMask to connect your wallet to this site. Confirm the connection.
+    - You should be prompted by MetaMask to connect your wallet to this site. Confirm the connection
 
 6. **Configure MetaMask for Localhost**
 
