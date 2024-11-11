@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { fetchPollPreviews, fetchPollDetails, castVote } from "../blockchain";
+import { fetchPollPreviews, fetchPollDetails } from "../blockchain";
 
-function PollPreviews({ isLoading }) {
+function PollPreviews({ isLoading, currentAccount, handleVote }) {
   const [polls, setPolls] = useState([]);
   const [detailedPolls, setDetailedPolls] = useState([]);
 
@@ -30,24 +30,6 @@ function PollPreviews({ isLoading }) {
     }
   }, [polls]);
 
-  const handleVote = async (pollId, optionIndex) => {
-    console.log(`Vote cast for Poll ID: ${pollId}, Option: ${optionIndex}`);
-    const success = await castVote(pollId, optionIndex);
-    if (success) {
-      alert("Vote cast successfully!");
-
-      // Reload poll details for this poll to update the vote count
-      const updatedPollDetails = await fetchPollDetails(pollId);
-      setDetailedPolls((prevPolls) =>
-        prevPolls.map((poll) =>
-          poll.pollId === pollId ? { ...poll, ...updatedPollDetails } : poll
-        )
-      );
-    } else {
-      alert("Failed to cast vote. Please try again.");
-    }
-  };
-
   return (
     <div>
       <h2>Poll Previews</h2>
@@ -65,7 +47,11 @@ function PollPreviews({ isLoading }) {
                 poll.options.map((option, i) => (
                   <div key={i} className="option" style={{ border: "1px solid navy", padding: "10px", textAlign: "center" }}>
                     <p>{option}</p>
-                    <button onClick={() => handleVote(poll.pollId, i)}>Vote</button>
+                    <button 
+                      onClick={() => handleVote(Number(poll.pollId), Number(i))}
+                    >
+                      Vote
+                    </button>
                   </div>
                 ))}
             </div>

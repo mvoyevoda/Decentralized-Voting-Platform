@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchPollPreviews } from "./blockchain";
+import { fetchPollPreviews, castVote } from "./blockchain";
 import ViewPolls from "./components/PollPreviews";
 // import VerifyVoter from "./components/VerifyVoter";
 
@@ -35,14 +35,58 @@ function App() {
     loadPolls();
   }, []);
 
+  const handleConnectWallet = async () => {
+    if (window.ethereum) {
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+      setCurrentAccount(accounts[0]);
+    } else {
+      alert("MetaMask is not installed.");
+    }
+  };
+
+  const handleVote = async (pollId, optionIndex) => {
+    console.log("Attempting to cast vote with parameters:");
+    console.log("Poll ID:", pollId);
+    console.log("Option Index:", optionIndex);
+    console.log("Current Account:", currentAccount);
+  
+    // Check if parameters are defined and valid
+    if (pollId == null || optionIndex == null || currentAccount == null) {
+      console.error("Error: Missing pollId, optionIndex, or currentAccount.");
+      return;
+    }
+  
+    try {
+      const success = await castVote(pollId, optionIndex, currentAccount);
+      if (success) {
+        alert("Vote cast successfully!");
+        // Optional: Reload poll data to reflect new vote count
+      } else {
+        alert("Failed to cast vote.");
+      }
+    } catch (error) {
+      console.error("Error casting vote:", error);
+    }
+  };
+
   return (
     <div className="App">
       <div style={{ padding: "10px", backgroundColor: "#f0f0f0", marginBottom: "20px" }}>
         <strong>Current Account:</strong> {currentAccount || "Not connected"}
+        {!currentAccount && (
+          <button onClick={handleConnectWallet} style={{ marginLeft: "10px" }}>
+            Connect Wallet
+          </button>
+        )}
       </div>
       <h1>Decentralized Voting Platform</h1>
       {/* <VerifyVoter /> */}
-      <ViewPolls polls={polls} isLoading={isLoading} />
+      <ViewPolls 
+        polls={polls} 
+        isLoading={isLoading} 
+        currentAccount={currentAccount} 
+        handleVote={handleVote} 
+      />
     </div>
   );
 }

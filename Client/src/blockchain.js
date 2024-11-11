@@ -1,29 +1,57 @@
 import Web3 from "web3";
 import DecentralizedVotingProtocolABI from "./DecentralizedVotingProtocolABI.json";
 
+let web3;
+let votingContract;
+
 export const loadWeb3AndContract = async () => {
-  if (window.ethereum) {
-    const web3 = new Web3(window.ethereum); // Use MetaMask’s provider explicitly
+  if (!web3 && window.ethereum) {
+    web3 = new Web3(window.ethereum); // Use MetaMask’s provider explicitly
     try {
       // Request account access if not already granted
       await window.ethereum.request({ method: "eth_requestAccounts" });
-      const votingContract = new web3.eth.Contract(
+      
+      const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS; // Retrieve the contract address
+      
+      // Log contract address and ABI to ensure they are loaded
+      console.log("Attempting to load contract with address:", contractAddress);
+      console.log("Contract ABI:", DecentralizedVotingProtocolABI);
+
+      // Initialize the contract
+      votingContract = new web3.eth.Contract(
         DecentralizedVotingProtocolABI,
-        import.meta.env.VITE_CONTRACT_ADDRESS
+        contractAddress
       );
-      return { web3, votingContract };
+      
+      if (!votingContract) {
+        throw new Error("Contract failed to initialize. Check the ABI and address.");
+      }
+
+      console.log("Contract initialized successfully.");
     } catch (error) {
-      console.error("User denied account access:", error);
+      console.error("User denied account access or other error:", error);
     }
-  } else {
+  } else if (!window.ethereum) {
     console.error("MetaMask is not installed!");
   }
+  
+  // Ensure votingContract is defined before returning
+  if (!votingContract) {
+    throw new Error("Failed to initialize contract. Check if MetaMask is connected and contract address is correct.");
+  }
+  
+  return { web3, votingContract };
 };
 
-
 export const fetchPollPreviews = async () => {
-  const { votingContract } = await loadWeb3AndContract();
   try {
+    const { votingContract } = await loadWeb3AndContract();
+    
+    // Check if votingContract is valid before making the call
+    if (!votingContract) {
+      throw new Error("votingContract is not initialized.");
+    }
+
     const response = await votingContract.methods.getPollPreviews().call();
     const pollTitles = response[0];
     const isActive = response[1];
@@ -36,14 +64,13 @@ export const fetchPollPreviews = async () => {
       pollId: index + 1, // Assuming pollId is sequential based on index + 1
     }));
   } catch (error) {
-    console.error("Error fetching polls:", error);
-    return [];
+    console.error("Error fetching polls in fetchPollPreviews:", error);
+    return []; // Return an empty array in case of error to prevent further issues
   }
 };
 
-
 export const fetchPollDetails = async (pollId) => {
-  const { votingContract } = await loadWeb3AndContract();
+  await loadWeb3AndContract();
   try {
     const response = await votingContract.methods.getPoll(pollId).call();
 
@@ -71,44 +98,29 @@ export const fetchPollDetails = async (pollId) => {
   }
 };
 
+export const castVote = async (pollId, optionIndex, account) => {
+  await loadWeb3AndContract();
 
-export const castVote = async (pollId, optionIndex) => {
-  const { web3, votingContract } = await loadWeb3AndContract();
-  const accounts = await web3.eth.getAccounts();
-  
+  console.log("Attempting to cast vote with parameters:");
+  console.log("Poll ID:", pollId);
+  console.log("Option Index:", optionIndex);
+  console.log("Account:", account);
+
+  // Check for undefined parameters explicitly
+  if (pollId == null || optionIndex == null || !account) {
+    console.error("Error: Missing parameters in castVote.");
+    return false;
+  }
+
   try {
-    console.log(`Casting vote for Poll ID: ${pollId}, Option Index: ${optionIndex}, From: ${accounts[0]}`);
     const transaction = await votingContract.methods
       .castVote(pollId, optionIndex)
-      .send({ from: accounts[0], gas: 500000 });
+      .send({ from: account, gas: 500000 });
 
     console.log("Vote cast successfully:", transaction);
-    return true; // Return true if the vote was successful
+    return true;
   } catch (error) {
     console.error("Error casting vote:", error.message || error);
-    alert(`Failed to cast vote: ${error.message || error}`);
-    return false; // Return false if the vote failed
+    return false;
   }
 };
-
-
-// export const createPoll = async (title, desc, options, imageURLs) => {
-//   const { web3, votingContract } = await loadWeb3AndContract();
-//   const accounts = await web3.eth.getAccounts();
-//   try {
-//     await votingContract.methods
-//       .createPoll(
-//         title,
-//         desc,
-//         Math.floor(Date.now() / 1000) + 60,
-//         Math.floor(Date.now() / 1000) + 600,
-//         options,
-//         imageURLs
-//       )
-//       .send({ from: accounts[0] });
-//     return true;
-//   } catch (error) {
-//     console.error("Error creating poll:", error);
-//     return false;
-//   }
-// };
