@@ -43,6 +43,44 @@ export const loadWeb3AndContract = async () => {
   return { web3, votingContract };
 };
 
+
+export const getCurrentAccount = async () => {
+  await loadWeb3AndContract();
+  const accounts = await web3.eth.getAccounts();
+  if (accounts.length === 0) {
+    console.error("No accounts found. Make sure MetaMask is connected.");
+    return null;
+  }
+  return accounts[0];
+};
+
+
+export const uploadPoll = async (pollName, pollDesc, startTime, endTime, options, imageURLs, account) => {
+  await loadWeb3AndContract();
+
+  console.log("Attempting to create poll with parameters:");
+  console.log("Poll Name:", pollName);
+  console.log("Poll Description:", pollDesc);
+  console.log("Start Time:", startTime);
+  console.log("End Time:", endTime);
+  console.log("Options:", options);
+  console.log("Image URLs:", imageURLs);
+  console.log("Account:", account);
+
+  try {
+    const transaction = await votingContract.methods
+      .createPoll(pollName, pollDesc, startTime, endTime, options, imageURLs)
+      .send({ from: account, gas: 500000 });
+
+    console.log("Poll created successfully:", transaction);
+    return true;
+  } catch (error) {
+    console.error("Error creating poll:", error.message || error);
+    return false;
+  }
+};
+
+
 export const fetchPollPreviews = async () => {
   try {
     const { votingContract } = await loadWeb3AndContract();
@@ -68,6 +106,7 @@ export const fetchPollPreviews = async () => {
     return []; // Return an empty array in case of error to prevent further issues
   }
 };
+
 
 export const fetchPollDetails = async (pollId) => {
   await loadWeb3AndContract();
@@ -98,30 +137,6 @@ export const fetchPollDetails = async (pollId) => {
   }
 };
 
-// export const fetchPollDetails = async (pollId) => {
-//   await loadWeb3AndContract();
-//   try {
-//     const response = await votingContract.methods.getPoll(pollId).call();
-
-//     // Extract data directly from the getPoll response
-//     return {
-//       pollId: response[0],
-//       title: response[1],
-//       description: response[2],
-//       creator: response[3],
-//       startTime: response[4],
-//       endTime: response[5],
-//       isActive: response[6],
-//       options: response[7],
-//       imageURLs: response[8],
-//       totalVotes: response[9].reduce((acc, count) => acc + parseInt(count, 10), 0), // Sum of all votes
-//       voteCounts: response[9].map((count) => parseInt(count, 10)), // Convert vote counts to integers
-//     };
-//   } catch (error) {
-//     console.error(`Error fetching details for poll ID ${pollId}:`, error);
-//     return null;
-//   }
-// };
 
 export const fetchVoteCounts = async (pollId) => {
   await loadWeb3AndContract();
@@ -134,6 +149,7 @@ export const fetchVoteCounts = async (pollId) => {
     return null; // Return null in case of error
   }
 };
+
 
 export const castVote = async (pollId, optionIndex, account) => {
   await loadWeb3AndContract();
