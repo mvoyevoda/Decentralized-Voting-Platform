@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchPollPreviews, castVote } from "./blockchain";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ViewPolls from "./components/PollPreviews";
-import HomePage from './MyHome';
+import HomePage from './pollinfo';
 import FormPage from "./Formpage";
 // import VerifyVoter from "./components/VerifyVoter";
 
