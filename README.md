@@ -20,7 +20,7 @@ To try out the DVP, follow these steps:
 
     - **Tab 1: Start the Blockchain Node**
       ```bash
-      cd ./DVP/Blockchain
+      cd ./Decentralized-Voting-Platform/Blockchain
       npm install
       npx hardhat node
       ```
@@ -33,7 +33,7 @@ To try out the DVP, follow these steps:
 
     - **Tab 3: Start the Client**
       ```bash
-      cd ./DVP/Client
+      cd ./Decentralized-Voting-Platform/Client
       npm install
       npm run dev
       ```
