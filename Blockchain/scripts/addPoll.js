@@ -1,7 +1,9 @@
-// const hre = require("hardhat");
+//const hre = require("hardhat");
 
-async function main() {
-  // Replace with the deployed DecentralizedVotingProtocol address
+export async function addPoll(event, pollName1, pollDesc1, options1, imageURLS1, startTime1, endTime1) {
+  event.preventDefault();
+  
+    // Replace with the deployed DecentralizedVotingProtocol address
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
   // Get the contract factory and attach to the deployed contract
@@ -9,15 +11,15 @@ async function main() {
   const votingContract = DecentralizedVotingProtocol.attach(contractAddress);
 
   // Poll 1 details: "batman vs superman"
-  const pollName1 = "batman vs superman";
-  const pollDesc1 = "Vote for your favorite character!";
-  const options1 = ["superman", "batman"];
-  const imageURLs1 = [
-      "https://example.com/spongebob.jpg",  // Replace with actual URL
-      "https://example.com/patrick.jpg"     // Replace with actual URL
-  ];
-  const startTime1 = Math.floor(Date.now() / 1000); // Start immediately
-  const endTime1 = startTime1 + 360000; // End 100 hrs after start time
+//   const pollName1 = "batman vs superman";
+//   const pollDesc1 = "Vote for your favorite character!";
+//   const options1 = ["superman", "batman"];
+//   const imageURLs1 = [
+//       "https://example.com/spongebob.jpg",  // Replace with actual URL
+//       "https://example.com/patrick.jpg"     // Replace with actual URL
+//   ];
+//   const startTime1 = Math.floor(Date.now() / 1000); // Start immediately
+//   const endTime1 = startTime1 + 360000; // End 100 hrs after start time
 
   // Call createPoll function on the contract for Poll 1
   try {
@@ -70,9 +72,9 @@ async function main() {
 }
 
 // Run the main function
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-      console.error(error);
-      process.exit(1);
-  });
+// main()
+//   .then(() => process.exit(0))
+//   .catch((error) => {
+//       console.error(error);
+//       process.exit(1);
+//   });
