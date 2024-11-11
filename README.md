@@ -3,7 +3,7 @@
 To run the DVP, follow these steps:
 
 ### Prerequisites
-- [MetaMask Chrome Extension](https://chrome.google.com/webstore/detail/metamask/)
+- [MetaMask Chrome Extension](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn)
 
 ### Steps
 
