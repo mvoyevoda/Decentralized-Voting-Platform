@@ -57,4 +57,4 @@ To try out the DVP, follow these steps:
       - **New RPC URL**: http://127.0.0.1:8545
       - **Chain ID**: 31337
 
-You’re all set!
+7.  **Have fun!**
