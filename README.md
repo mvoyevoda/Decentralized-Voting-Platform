@@ -10,7 +10,7 @@ To run the DVP, follow these steps:
 1. **Clone the Repository and Checkout a New Branch**
 
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/mvoyevoda/DecentralizedVotingPlatform.git
    cd DVP
    git checkout -b <your-name>
 
