@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchPollPreviews, castVote } from "./blockchain";
+import { fetchPollPreviews, castVote } from "../blockchain";
 import { Link } from 'react-router-dom';
-import ViewPolls from "./components/PollPreviews";
+import PollPreviewList from "../components/PollPreviewList";
 
-function HomePage() {
+function Explore() {
 
   const [polls, setPolls] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +72,7 @@ function HomePage() {
   };
 
   return (
-    <div className="App">
+    <div className="Explore">
       <div style={{ padding: "10px", backgroundColor: "#f0f0f0", marginBottom: "20px" }}>
         <strong>Current Account:</strong> {currentAccount || "Not connected"}
         {!currentAccount && (
@@ -81,19 +81,19 @@ function HomePage() {
           </button>
         )}
       </div>
+      <button><Link to="/create-poll">Create a Poll  </Link></button>
       <h1>Decentralized Voting Platform</h1>
-      {/* <VerifyVoter /> */}
-      <ViewPolls 
+      <PollPreviewList 
         polls={polls} 
         isLoading={isLoading} 
         currentAccount={currentAccount} 
         handleVote={handleVote} 
       />
 
-      <button><Link to="/pollform">Create a Poll  </Link></button>
+      
       
     </div>
   );
 }
 
-export default HomePage;
+export default Explore;

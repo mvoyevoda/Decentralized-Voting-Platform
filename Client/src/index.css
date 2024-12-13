@@ -1,5 +1,5 @@
 /* Centering content in the main App container */
-.App {
+.App, .Explore, .CreatePoll{
   display: flex;
   flex-direction: column;
   align-items: center;

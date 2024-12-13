@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { uploadPoll, getCurrentAccount } from "../blockchain";
+import { Link } from 'react-router-dom';
 
-function FormPage() {
+function CreatePoll() {
   const [pollName1, setPollName1] = useState('');
   const [pollDesc1, setPollDesc1] = useState('');
   const [startTime1, setStartTime1] = useState('');
@@ -71,6 +72,7 @@ function FormPage() {
 
   return (
     <div>
+      <button><Link to="/">Return to Explore</Link></button>
       <h1>Create a Poll</h1>
       <form>
         <label>
@@ -123,4 +125,4 @@ function FormPage() {
   );
 }
 
-export default FormPage;
+export default CreatePoll;
