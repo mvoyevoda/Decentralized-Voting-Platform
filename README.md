@@ -28,7 +28,7 @@ To try out the DVP, follow these steps:
     - **Tab 2: Deploy Contracts and Add a Poll**
       ```bash
       npx hardhat ignition deploy ./ignition/modules/DVP.js --network localhost
-      npx hardhat run scripts/addPoll.js --network localhost # Create some dummy polls
+      npx hardhat run scripts/addSamplePolls.js --network localhost # Create some sample polls
       ```
 
     - **Tab 3: Start the Client**
