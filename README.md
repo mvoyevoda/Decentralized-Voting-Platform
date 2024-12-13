@@ -22,7 +22,7 @@ To try out the DVP, follow these steps:
       ```bash
       cd ./Decentralized-Voting-Platform/Blockchain
       npm install
-      npx hardhat node --hostname 0.0.0.0
+      npx hardhat node
       ```
 
     - **Tab 2: Deploy Contracts and Add a Poll**
