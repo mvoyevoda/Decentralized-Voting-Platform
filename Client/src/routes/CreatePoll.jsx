@@ -1,15 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { uploadPoll, getCurrentAccount } from "../blockchain";
-import { Link } from 'react-router-dom';
+import NavBar from "../components/NavBar";
 
 function CreatePoll() {
+  const [currentAccount, setCurrentAccount] = useState(null);
   const [pollName1, setPollName1] = useState('');
   const [pollDesc1, setPollDesc1] = useState('');
   const [startTime1, setStartTime1] = useState('');
   const [endTime1, setEndTime1] = useState('');
   const [currOption, setCurrOption] = useState('');
-  const [currImageURL, setCurrImageURL] = useState('');
   const [options, setOptions] = useState([]);
+  const [currImageURL, setCurrImageURL] = useState('');
+
+  useEffect(() => {
+    async function loadAccount() {
+      if (window.ethereum) {
+        const accounts = await window.ethereum.request({ method: "eth_accounts" });
+        setCurrentAccount(accounts[0]);
+
+        window.ethereum.on("accountsChanged", (accounts) => {
+          setCurrentAccount(accounts[0] || "");
+        });
+      } else {
+        console.error("MetaMask not available.");
+      }
+    }
+
+    loadAccount();
+  }, []);
 
   const addOption = (event) => {
     event.preventDefault();
@@ -72,7 +90,7 @@ function CreatePoll() {
 
   return (
     <div>
-      <button><Link to="/">Return to Explore</Link></button>
+      <NavBar currentAccount={currentAccount} />
       <h1>Create a Poll</h1>
       <form>
         <label>

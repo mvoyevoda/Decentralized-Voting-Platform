@@ -1,0 +1,62 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; Optional: Prevent scrolling */
+}
+
+.NavBar {
+  box-sizing: border-box;
+  padding: 1%; /* Adjust padding if necessary */
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex; 
+  align-items: center; /* Vertically center items */
+  justify-content: space-between; /* Space out children */
+  background-color: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle drop shadow */
+}
+
+.create-poll-button {
+  background-color: transparent; /* Default background */
+  border-radius: 8px;
+  border-width: 0;
+  color: #333333;
+  cursor: pointer;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 10px 12px;
+  transition: all 200ms; /* Smooth transition for hover effect */
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.create-poll-button:hover {
+  background-color: rgba(51, 51, 51, 0.05); /* Apply background color on hover */
+}
+
+.logo {
+  /* flex: 1; Allow the logo to take up available space */
+  width: 400px;
+  text-align: center; /* Center the logo text */
+}
+
+.account-address {
+  /* flex: 0; Prevent excessive width */
+  width: 5%;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+  text-align: right; /* Align account address to the right */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Hide overflow text if necessary */
+  /* text-overflow: ellipsis; Add ellipsis for long addresses */
+}

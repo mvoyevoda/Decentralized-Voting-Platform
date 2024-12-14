@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchPollDetails, fetchVoteCounts } from "../blockchain";
 import PollPreview from "./PollPreview";
 
-function PollPreviewList({ polls, isLoading, handleVote }) {
+function PollPreviewList({ polls, isLoading}) {
   const [detailedPolls, setDetailedPolls] = useState([]);
 
   // Load detailed data for each poll and vote counts
@@ -23,14 +23,14 @@ function PollPreviewList({ polls, isLoading, handleVote }) {
   }, [polls]);
 
   return (
-    <div>
-      <h2>Poll Previews</h2>
+    <div className="poll-preview-list">
+      {/* <h2>Poll Previews</h2> */}
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         detailedPolls.length > 0 &&
         detailedPolls.map((poll, index) => (
-          <PollPreview key={index} index={index} poll={poll} handleVote={handleVote} />
+          <PollPreview key={index} index={index} poll={poll}/>
         ))
       )}
     </div>

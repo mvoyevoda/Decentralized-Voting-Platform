@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Explore from './routes/Explore';
 import CreatePoll from "./routes/CreatePoll";
-import PollDetails from './components/PollDetails';
+import PollDetails from './routes/PollDetails';
+import './styles/App.css';
 
 function App() {
   return (

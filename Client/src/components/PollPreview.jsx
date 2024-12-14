@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function PollPreview({ poll, index, handleVote }) {
+function PollPreview({ poll, index}) {
 
   const navigate = useNavigate();
   const goToDetails = () => {
@@ -8,21 +8,21 @@ function PollPreview({ poll, index, handleVote }) {
   };
 
   return (
-    <div className="poll-preview" key={index} style={{ marginBottom: "20px" } }>
-      <p onClick={goToDetails} style={{ cursor: 'pointer' }}>{poll.title}</p>
-      <p>Active: {poll.isActive ? "Yes" : "No"}</p>
-      <p>Total Votes: {poll.totalVotes}</p>
-      <div className="options-container" style={{ display: "flex", gap: "20px" }}>
+    <div className="poll-preview" key={index} onClick={goToDetails}>
+      <div className="poll-preview-header">
+        <p>{poll.title}</p>
+        <p>{poll.totalVotes} Votes</p>
+      </div>
+      <div className="poll-preview-options">
         {poll.options &&
           poll.options.map((option, i) => (
-            <div key={i} className="option" style={{ border: "1px solid navy", padding: "10px", textAlign: "center" }}>
-              <p>{option}</p>
-              <p>Votes: {poll.voteCounts ? poll.voteCounts[i] : 0}</p>
-              <button 
-                onClick={() => handleVote(Number(poll.pollId), Number(i))}
-              >
-                Vote
-              </button>
+            <div key={i} className="option">
+              <div style={{ width: "50%", textAlign: "center"}}>
+                <p>{option}</p>
+              </div>
+              <div style={{ width: "50%", textAlign: "center"}}>
+                <p>{poll.voteCounts ? poll.voteCounts[i] : 0}</p>
+              </div>
             </div>
           ))}
       </div>
