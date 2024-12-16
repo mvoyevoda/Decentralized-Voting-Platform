@@ -50,8 +50,8 @@ function Explore() {
     <div className="Explore">
       <NavBar currentAccount={currentAccount} />
       {!currentAccount && (
-        <div style={{ marginTop: '20px' }}>
-          <button onClick={handleConnectWallet}>Connect Wallet</button>
+        <div style={{ marginTop: '80px' }} >
+          <button onClick={handleConnectWallet} className="button">Connect Wallet</button>
         </div>
       )}
       <PollPreviewList 

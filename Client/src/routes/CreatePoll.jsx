@@ -37,7 +37,6 @@ function CreatePoll() {
     }
     let newOptions = [...options];
     newOptions.push({ option: currOption, imageURL: currImageURL });
-    console.log(newOptions);
     setOptions(newOptions);
     setCurrOption('');
     setCurrImageURL('');
@@ -46,7 +45,6 @@ function CreatePoll() {
   const handleAddPoll = async (e) => {
     e.preventDefault();
 
-    // Validate inputs
     if (!pollName1 || !pollDesc1 || !startTime1 || !endTime1 || options.length < 2) {
       alert("Please fill all fields and add at least two options.");
       return;
@@ -63,84 +61,174 @@ function CreatePoll() {
     const optionsArray = options.map(o => o.option);
     const imageURLsArray = options.map(o => o.imageURL);
 
-    // Get the account
     const account = await getCurrentAccount();
     if (!account) {
       alert("No account found. Please connect to MetaMask.");
       return;
     }
 
-    // Call uploadPoll
     const success = await uploadPoll(pollName1, pollDesc1, startTime, endTime, optionsArray, imageURLsArray, account);
 
     if (success) {
-      // Handle success, e.g., show a message, redirect, clear the form
       alert("Poll created successfully!");
-      // Clear the form
       setPollName1('');
       setPollDesc1('');
       setStartTime1('');
       setEndTime1('');
       setOptions([]);
     } else {
-      // Handle failure
       alert("Failed to create poll.");
     }
   }
 
-  return (
-    <div>
-      <NavBar currentAccount={currentAccount} />
-      <h1>Create a Poll</h1>
-      <form>
-        <label>
-          Poll Name:
-          <input type="text" value={pollName1} onChange={(e) => setPollName1(e.target.value)}/>
-        </label>
-        <br />
-        <label>
-          Poll Description:
-          <input type="text" value={pollDesc1} onChange={(e) => setPollDesc1(e.target.value)}/>
-        </label>
-        <br />
-        <label>
-          Option Text:
-          <input type="text" value={currOption} onChange={(e) => setCurrOption(e.target.value)}/>
-        </label>
-        <br />
-        <label>
-          Image URL:
-          <input type="text" value={currImageURL} onChange={(e) => setCurrImageURL(e.target.value)}/>
-        </label>
-        <br />
-        <button onClick={addOption}>Add Option</button>
-        <br/>
-        <label>
-          Start Time:
-          <input type="datetime-local" value={startTime1} onChange={(e) => setStartTime1(e.target.value)}/>
-        </label>
-        <br/>
-        <label>
-          End Time:
-          <input type="datetime-local" value={endTime1} onChange={(e) => setEndTime1(e.target.value)}/>
-        </label>
-        <p>
-          {
-            options.map((optionObj, index) => (
-              <div key={index}>
-                <span>Option: {optionObj.option}</span><br/>
-                <span>Image URL: {optionObj.imageURL}</span><br/>
-              </div>
-            ))
-          }
-        </p>
+  const containerStyle = {
+    minHeight: '100vh',
+    backgroundColor: '#f3f4f6',
+    padding: '80px 20px 20px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  };
 
-        <br />
-        <br />
-        <button onClick={(e) => handleAddPoll(e)} type="submit">Submit</button>
-      </form>
-    </div>
+  const formContainerStyle = {
+    width: '100%',
+    maxWidth: '600px',
+    backgroundColor: 'white',
+    padding: '40px',
+    borderRadius: '8px',
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  };
+
+  const headingStyle = {
+    fontSize: '24px',
+    fontWeight: 'bold',
+    marginBottom: '20px',
+    textAlign: 'center',
+  };
+
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '5px',
+    fontWeight: 'bold',
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px',
+    marginBottom: '15px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+  };
+
+  const buttonStyle = {
+    backgroundColor: '#000000',
+    color: 'white',
+    padding: '8px 12px',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    marginRight: '10px',
+    fontSize: '14px',
+    marginBottom: '10px',
+  };
+
+  const submitButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: '#000000',
+  };
+
+  const optionContainerStyle = {
+    backgroundColor: '#f3f4f6',
+    padding: '10px',
+    marginBottom: '10px',
+    borderRadius: '4px',
+  };
+
+  return (
+    <>
+      <NavBar currentAccount={currentAccount} />
+      <div style={containerStyle}>
+        <div style={formContainerStyle}>
+          <h1 style={headingStyle}>Create a Poll</h1>
+          <form>
+            <label style={labelStyle} htmlFor="pollName">Poll Name</label>
+            <input
+              id="pollName"
+              type="text"
+              value={pollName1}
+              onChange={(e) => setPollName1(e.target.value)}
+              placeholder="Enter poll name"
+              style={inputStyle}
+            />
+
+            <label style={labelStyle} htmlFor="pollDesc">Poll Description</label>
+            <textarea
+              id="pollDesc"
+              value={pollDesc1}
+              onChange={(e) => setPollDesc1(e.target.value)}
+              placeholder="Enter poll description"
+              style={{...inputStyle, height: '100px'}}
+            />
+
+            <label style={labelStyle} htmlFor="currOption">Option Text</label>
+            <input
+              id="currOption"
+              type="text"
+              value={currOption}
+              onChange={(e) => setCurrOption(e.target.value)}
+              placeholder="Enter option text"
+              style={inputStyle}
+            />
+
+            <label style={labelStyle} htmlFor="currImageURL">Image URL</label>
+            <input
+              id="currImageURL"
+              type="text"
+              value={currImageURL}
+              onChange={(e) => setCurrImageURL(e.target.value)}
+              placeholder="Enter image URL"
+              style={inputStyle}
+            />
+
+            <button style={buttonStyle} onClick={addOption}>Add Option</button>
+
+            <label style={labelStyle} htmlFor="startTime">Start Time</label>
+            <input
+              id="startTime"
+              type="datetime-local"
+              value={startTime1}
+              onChange={(e) => setStartTime1(e.target.value)}
+              style={inputStyle}
+            />
+
+            <label style={labelStyle} htmlFor="endTime">End Time</label>
+            <input
+              id="endTime"
+              type="datetime-local"
+              value={endTime1}
+              onChange={(e) => setEndTime1(e.target.value)}
+              style={inputStyle}
+            />
+
+            <div style={{marginBottom: '20px'}}>
+              <h3 style={{...labelStyle, marginTop: '20px'}}>Added Options:</h3>
+              {options.map((optionObj, index) => (
+                <div key={index} style={optionContainerStyle}>
+                  <p style={{margin: '5px 0'}}><strong>Option:</strong> {optionObj.option}</p>
+                  <p style={{margin: '5px 0'}}><strong>Image URL:</strong> {optionObj.imageURL}</p>
+                </div>
+              ))}
+            </div>
+
+            <button style={submitButtonStyle} onClick={(e) => handleAddPoll(e)} type="submit">
+              Create Poll
+            </button>
+          </form>
+        </div>
+      </div>
+    </>
   );
 }
 
 export default CreatePoll;
+
