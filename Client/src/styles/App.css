@@ -10,8 +10,10 @@ html, body {
 .NavBar {
   box-sizing: border-box;
   padding: 1%; /* Adjust padding if necessary */
+  position: fixed; /* Fixes the NavBar at the top */
   top: 0;
-  width: 100%;
+  left: 0;
+  width: 100%; /* Stretches the NavBar across the full width of the screen */
   z-index: 1000;
   display: flex; 
   align-items: center; /* Vertically center items */
@@ -20,6 +22,7 @@ html, body {
   cursor: pointer;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add subtle drop shadow */
 }
+
 
 .create-poll-button {
   background-color: transparent; /* Default background */
@@ -59,4 +62,41 @@ html, body {
   white-space: nowrap; /* Prevent text wrapping */
   overflow: hidden; /* Hide overflow text if necessary */
   /* text-overflow: ellipsis; Add ellipsis for long addresses */
+}
+
+
+.create-poll-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of viewport */
+  background-color: #f4f4f4; /* Optional background */
+}
+
+.create-poll-content {
+  text-align: center; /* Center text within the container */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%; /* Responsive width */
+}
+
+.PollDetails {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  background-color: #f4f4f4; /* Optional background */
+}
+
+.center-container {
+  text-align: center; /* Center text within the container */
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%; /* Responsive width */
 }

@@ -1,4 +1,5 @@
 .Explore {
+  margin-top: 60px; /* Matches the height of the NavBar */
   background-color: #f0ede4;
   min-height: 100vh;
   min-width: 100vw;
