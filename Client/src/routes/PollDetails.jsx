@@ -77,30 +77,32 @@ function PollDetails() {
   };
 
   if (loading) {
-    return <div>Loading poll...</div>;
+    return <div className="loading">Loading poll...</div>;
   }
 
   if (!poll) {
-    return <div>Poll not found.</div>;
+    return <div className="not-found">Poll not found.</div>;
   }
 
   return (
     <div className="PollDetails">
       <NavBar currentAccount={currentAccount} />
-      <div className="poll-details" style={{ marginBottom: "20px" }}>
-        <p>{poll.title}</p>
-        <p>Total Votes: {poll.totalVotes}</p>
-        <div className="poll-details-options" style={{ display: "flex", gap: "20px" }}>
-          {poll.options &&
-            poll.options.map((option, i) => (
-              <div key={i} className="poll-details-option">
-                <p>{option}</p>
-                <p>Votes: {voteCounts.length > 0 ? voteCounts[i] : "Loading..."}</p>
-                <button onClick={() => handleVote(Number(poll.pollId), Number(i))}>
-                  Vote
-                </button>
-              </div>
-            ))}
+      <div className="center-container">
+        <div className="poll-details" style={{ marginBottom: "20px" }}>
+          <p>{poll.title}</p>
+          <p>Total Votes: {poll.totalVotes}</p>
+          <div className="poll-details-options" style={{ display: "flex", gap: "20px" }}>
+            {poll.options &&
+              poll.options.map((option, i) => (
+                <div key={i} className="poll-details-option">
+                  <p>{option}</p>
+                  <p>Votes: {voteCounts.length > 0 ? voteCounts[i] : "Loading..."}</p>
+                  <button onClick={() => handleVote(Number(poll.pollId), Number(i))}>
+                    Vote
+                  </button>
+                </div>
+              ))}
+          </div>
         </div>
       </div>
     </div>

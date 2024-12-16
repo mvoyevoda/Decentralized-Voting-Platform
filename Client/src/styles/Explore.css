@@ -1,9 +1,13 @@
 .Explore {
-  background-color: white;
+  margin-top: 60px; /* Matches the height of the NavBar */
+  background-color: #f0ede4;
   min-height: 100vh;
   min-width: 100vw;
   padding: 0;
   font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .poll-preview-list {
@@ -14,6 +18,7 @@
   /* gap: 1%; */
   width: 100%;
   box-sizing: border-box; /* Include padding and border in width/height */
+  background-color: #f0ede4;
 }
 
 .poll-preview {
@@ -31,7 +36,7 @@
 }
 
 .poll-preview:hover {
-  background-color: #f9f9f9; /* Light gray background on hover */
+  background-color: #a2e7df; /* Light gray background on hover */
 }
 
 .poll-preview-header {
@@ -70,3 +75,21 @@
   flex-direction: column;
   align-items: center;
 }
+
+.button {
+  background-color: black; /* Default background */
+  border-radius: 8px;
+  border-width: 0;
+  color: 	white;
+  cursor: pointer;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  padding: 10px 12px;
+  transition: all 200ms; /* Smooth transition for hover effect */
+  white-space: nowrap;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  }
