@@ -83,30 +83,98 @@ function PollDetails() {
   if (!poll) {
     return <div className="not-found">Poll not found.</div>;
   }
-
-  return (
-    <div className="PollDetails">
-      <NavBar currentAccount={currentAccount} />
-      <div className="center-container">
-        <div className="poll-details" style={{ marginBottom: "20px" }}>
-          <p>{poll.title}</p>
-          <p>Total Votes: {poll.totalVotes}</p>
-          <div className="poll-details-options" style={{ display: "flex", gap: "20px" }}>
-            {poll.options &&
-              poll.options.map((option, i) => (
-                <div key={i} className="poll-details-option">
-                  <p>{option}</p>
-                  <p>Votes: {voteCounts.length > 0 ? voteCounts[i] : "Loading..."}</p>
-                  <button onClick={() => handleVote(Number(poll.pollId), Number(i))}>
-                    Vote
-                  </button>
-                </div>
-              ))}
+    const containerStyle = {
+      maxWidth: '800px',
+      margin: '0 auto',
+      marginTop: '60px',
+      padding: '20px',
+      fontFamily: 'Arial, sans-serif',
+    };
+  
+    const cardStyle = {
+      backgroundColor: '#ffffff',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      padding: '20px',
+    };
+  
+    const titleStyle = {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      marginBottom: '10px',
+    };
+  
+    const totalVotesStyle = {
+      fontSize: '14px',
+      color: '#666',
+      marginBottom: '20px',
+    };
+  
+    const optionsContainerStyle = {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+      gap: '20px',
+    };
+  
+    const optionCardStyle = {
+      backgroundColor: '#f8f8f8',
+      borderRadius: '4px',
+      padding: '15px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.05)',
+    };
+  
+    const optionTitleStyle = {
+      fontSize: '16px',
+      fontWeight: 'bold',
+      marginBottom: '10px',
+    };
+  
+    const voteCountStyle = {
+      fontSize: '14px',
+      color: '#666',
+      marginBottom: '15px',
+    };
+  
+    const buttonStyle = {
+      backgroundColor: '#000000',
+      color: '#ffffff',
+      border: 'none',
+      borderRadius: '4px',
+      padding: '10px 15px',
+      fontSize: '14px',
+      cursor: 'pointer',
+      width: '100%',
+    };
+  
+    return (
+      <div style={{ backgroundColor: '#f0f0f0', minHeight: '100vh' }}>
+        <NavBar currentAccount={currentAccount} />
+        <div style={containerStyle}>
+          <div style={cardStyle}>
+            <h2 style={titleStyle}>{poll.title}</h2>
+            <p style={totalVotesStyle}>Total Votes: {poll.totalVotes}</p>
+            <div style={optionsContainerStyle}>
+              {poll.options &&
+                poll.options.map((option, i) => (
+                  <div key={i} style={optionCardStyle}>
+                    <h3 style={optionTitleStyle}>{option}</h3>
+                    <p style={voteCountStyle}>
+                      Votes: {voteCounts.length > 0 ? voteCounts[i] : "Loading..."}
+                    </p>
+                    <button
+                      onClick={() => handleVote(Number(poll.pollId), Number(i))}
+                      style={buttonStyle}
+                    >
+                      Vote
+                    </button>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
+
 
 export default PollDetails;
